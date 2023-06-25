@@ -1,50 +1,49 @@
-import React from 'react'
-import JSON from 'circular-json';
-import {useState,useEffect} from 'react';
+import React from 'react';
+import { useState } from 'react';
 import './App.css';
-import { useNavigate } from 'react-router-dom';
-import {Link} from 'react-router-dom'
-import axios from 'axios'
-import {Form,Input,Button} from 'reactstrap';
-import CircularJSON from 'circular-json';
-import { stringify } from 'flatted';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { Form, Input, Button } from 'reactstrap';
 
+function Register() {
+  const [values, setValues] = useState({
+    name: '',
+    email: '',
+    password: '',
+  });
 
-function Register(){
-  
-const [values,setValues]=useState({
-  name:'',
-  email:'',
-  password:''
-})
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { name, email, password } = values;
+      const data = { name, email, password };
+      const result = await axios.post("http://localhost:8087/api/register/register", data, { withCredentials: true });
+      console.log(result.data);
+    } catch (err) {
+      console.log(err.response.data);
+    }
+  };
 
-  
-const handleSubmit= async e=>{
-e.preventDefault();
-try{
- await axios.post("http://localhost:8087/api/register/register",stringify(values), {withCredentials: true })
-}
-catch(err){
-console.log(err)
-}}
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className='App bg-primary'>
-      <div className=' register bg-white p-3 rounded w-25'>
-     <Form inline onSubmit={handleSubmit} className='form'> 
-     <h3>Register Page</h3>
- 
+      <div className='register bg-white p-3 rounded w-25'>
+        <Form inline onSubmit={handleSubmit} className='form'>
+          <h3>Register Page</h3>
 
-<Input type="text" label="Name" className="mr-3" onChange={(e)=>setValues({...values,name:e})}/>
-<Input type="email" label="email" onChange={(e)=>setValues({...values,email:e})}/>
-<Input type="password" label="password" onChange={(e)=>setValues({...values,password:e})}/>
-<Button type="submit" color="success" className="font-weight-bold"  onClick={handleSubmit}>SignUp</Button>
-<Link to="/login" >
-  LOGIN
-</Link>
-     </Form>
-     </div>
+          <Input type="text" name="name" label="Name" className="mr-3" onChange={handleChange} />
+          <Input type="email" name="email" label="Email" onChange={handleChange} />
+          <Input type="password" name="password" label="Password" onChange={handleChange} />
+
+          <Button type="submit" color="success" className="font-weight-bold">SignUp</Button>
+          <Link to="/login">LOGIN</Link>
+        </Form>
+      </div>
     </div>
   );
 }
 
-export default Register
+export default Register;
