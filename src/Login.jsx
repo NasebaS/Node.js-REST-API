@@ -4,6 +4,7 @@ import './App.css';
 import {Link} from 'react-router-dom'
 import axios from 'axios'
 import {Form,Input,Button} from 'reactstrap';
+import { useNavigate } from 'react-router-dom';
 
 
 function Login(){
@@ -12,6 +13,7 @@ const [values,setValues]=useState({
   email:'',
   password:''
 })
+const navigate=useNavigate()
   
 const handleSubmit = async (e) => {
   e.preventDefault();
@@ -38,7 +40,8 @@ const handleChange = (e) => {
 
 <Input type="email" name="email" label="email" onChange={handleChange}/>
 <Input type="password" name="password" label="password" onChange={handleChange}/>
-<Button type="submit" color="success" className="font-weight-bold"  onClick={handleSubmit}>Login</Button>
+<Button type="submit" color="primary" className="font-weight-bold"  onClick={handleSubmit}>Login</Button>
+<Button type="submit" color="success" className="font-weight-bold"  onClick={()=>navigate('/update')}>Update</Button>
 <Link to="/register" >
   CREATE AN ACCOUNT
 </Link>
