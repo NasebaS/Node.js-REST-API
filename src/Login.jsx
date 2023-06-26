@@ -41,7 +41,7 @@ const handleChange = (e) => {
 <Input type="email" name="email" label="email" onChange={handleChange}/>
 <Input type="password" name="password" label="password" onChange={handleChange}/>
 <Button type="submit" color="primary" className="font-weight-bold"  onClick={handleSubmit}>Login</Button>
-<Button type="submit" color="success" className="font-weight-bold"  onClick={()=>navigate('/update')}>Update</Button>
+<Button type="submit" color="success" className="font-weight-bold"> <Link to={`/update/${userId}`}>Update</Link></Button>
 <Link to="/register" >
   CREATE AN ACCOUNT
 </Link>

@@ -1,24 +1,27 @@
 import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
-import './App.css';
+
 import { Form, Input, Button } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link,useLocation } from 'react-router-dom';
 
 const Update = () => {
+    const location = useLocation();
+    console.log(location.pathname.split("/"))
+
     {const [values, setValues] = useState({
     name: '',
     email: '',
     password: '',
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (id) => {
     e.preventDefault();
     try {
       const { name, email, password } = values;
       const data = { name, email, password };
-      const result = await axios.post("http://localhost:8087/api/users/", data, { withCredentials: true });
-      console.log(result.data);
+    //   const result = await axios.put(`http://localhost:8087/api/users/`, data, { withCredentials: true });
+    //   console.log(result.data);
     } catch (err) {
       console.log(err.response.data);
     }
